@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+################################################################################
+# Check for -h flag and provide instructions accordingly.                      #
+################################################################################
+if [ "$1" == "-h" ]; then
+  echo Usage: $`basename $0` \<conversation_name\>
+  echo Creates a conversation with the \<conversation_name\> as its non-unique identifier 
+  echo \(also called „friendly-name“ by Twilio\).
+  exit 0
+fi
+
+################################################################################
+# Variables                                                                    #
+################################################################################
+conversation_name=${1?Error: Please provide a conversation name.}
+
+################################################################################
+# Main Programm                                                                #
+################################################################################
+twilio api:conversations:v1:conversations:create \
+    --friendly-name $conversation_name

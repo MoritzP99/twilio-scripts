@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+################################################################################
+# Check for -h flag and provide instructions accordingly.                      #
+################################################################################
+if [ "$1" == "-h" ]; then
+  echo Usage: $`basename $0`.
+  echo Prints out the list of all conversations connected to the current conversation service.
+  exit 0
+fi
+
+################################################################################
+# Main Programm                                                                #
+################################################################################
+
+twilio api:conversations:v1:conversations:list
+

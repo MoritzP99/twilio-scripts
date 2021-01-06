@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+################################################################################
+# Check for -h flag and provide instructions accordingly.                      #
+################################################################################
+if [ "$1" == "-h" ]; then
+  echo Usage: $`basename $0` \<conversation-sid\>
+  echo Deletes conversation with corresponding conversation-sid.
+  exit 0
+fi
+
+################################################################################
+# Variables                                                                    #
+################################################################################
+conversation_sid=${1?Error: Please provide a conversation-sid.}
+
+
+################################################################################
+# Main Programm                                                                #
+################################################################################
+twilio api:conversations:v1:conversations:remove \
+    --sid $conversation_sid

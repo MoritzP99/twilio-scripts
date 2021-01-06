@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+default_proxy="+447588059223"
+
+################################################################################
+# Check for -h flag and provide instructions accordingly.                            							  #
+################################################################################
+if [ "$1" == "-h" ]; then
+  echo Usage: $`basename $0` \<conversation-sid\> \<participant_phone_number\> \[proxy_number\]
+  echo Adds a participant to the conversation with the provided conversation-sid.
+  echo A conversation-sid is always of the form CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+  echo Please also consider that the proxy number is optional and is set to $default_proxy by default.
+  exit 0
+fi
+
+################################################################################
+# Variables                                                                    #
+################################################################################
+conversation_sid=${1?Error: Please provide a conversation-sid.}
+participant_phone_number=${2?Error: Please provide phone number of participant.}
+proxy_number=${3:-$default_proxy}
+
+################################################################################
+# Main Programm                                                                #
+################################################################################
+
+twilio api:conversations:v1:conversations:participants:create \
+    --conversation-sid  $conversation_sid \
+    --messaging-binding.address $participant_phone_number \
+    --messaging-binding.proxy-address $proxy_number

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+################################################################################
+# Check for -h flag and provide instructions accordingly.                      #
+################################################################################
+if [ "$1" == "-h" ]; then
+  echo Usage: $`basename $0` \<conversation-sid\> \<participant-id\>
+  echo Deletes participant with participant-id from conversation with the provided conversation-sid.
+  echo A conversation-sid is always of the form CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,
+  echo while a participant-id is always of the form MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  exit 0
+fi
+
+################################################################################
+# Variables                                                                    #
+################################################################################
+conversation_sid=${1?Error: Please provide a conversation-sid.}
+conversation_sid=${2?Error: Please provide a participant-id.}
+
+
+################################################################################
+# Main Programm                                                                #
+################################################################################
+
+twilio api:conversations:v1:conversations:participants:remove \
+    --conversation-sid $conversation_sid
+    --sid $participant_id
+
